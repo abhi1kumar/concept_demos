@@ -97,7 +97,7 @@ workers       = 2
 num_epochs    = 40
 seed          = 0
 
-figsize    = (15, 6)
+figsize    = (20, 6)
 dpi        = 150
 fs         = 16
 lw         = 3
@@ -148,6 +148,8 @@ if use_saved:
 else:
     model1      = train(train_dataloader, model1, criterion= criterion1, num_epochs= num_epochs)
     save_model(model= model1, path= model1_path)
+
+print("Running inference...")
 y_model1    = eval(val_dataloader , model1)
 y_model1_mean_numpy = y_model1.cpu().float().numpy().flatten()
 
@@ -174,6 +176,7 @@ else:
     model2     = train (train_dataloader, model2, criterion= criterion2, learning_rate= 0.03, num_epochs= num_epochs)
     save_model(model= model2, path= model2_path)
 
+print("Running inference...")
 num_evals = 10
 y_model_all = []
 for i in range(num_evals):
@@ -207,6 +210,7 @@ else:
     model3     = train (train_dataloader, model3, criterion= criterion3, learning_rate= 0.03, num_epochs= num_epochs)
     save_model(model= model3, path= model3_path)
 
+print("Running inference...")
 y_model3            = eval(val_dataloader, model3)
 y_model3_numpy      = y_model3.cpu().float().numpy()
 y_model3_mean_numpy = y_model3_numpy[:, 0].flatten()
@@ -217,4 +221,5 @@ plot_variable(x_val_numpy, y_val_numpy, x_train_numpy, y_train_numpy, mean= y_mo
               sigma= y_model3_sigm_numpy, label="Aleatoric Model", color_mean= color4, color_sigma= color5)
 
 plt.legend(loc= "upper left")
+plt.savefig("uncertainty.png")
 plt.show()
