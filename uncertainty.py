@@ -94,8 +94,8 @@ num_samples   = 20
 bound_train   = 4
 std_dev_noise = 3
 workers       = 2
-num_epochs    = 100
-seed          = 10
+num_epochs    = 40
+seed          = 0
 
 figsize    = (15, 6)
 dpi        = 150
@@ -201,11 +201,11 @@ criterion3  = NLLLoss()
 model3_path = os.path.join(save_folder, "model3_epoch_" + str(num_epochs) + ".pth")
 
 if use_saved:
-    model3 = load_model(model= model3, path= model2_path)
+    model3 = load_model(model= model3, path= model3_path)
 else:
     model3 = load_model(model= model3, path= model1_path)
     model3     = train (train_dataloader, model3, criterion= criterion3, learning_rate= 0.03, num_epochs= num_epochs)
-    save_model(model= model3, path= model2_path)
+    save_model(model= model3, path= model3_path)
 
 y_model3            = eval(val_dataloader, model3)
 y_model3_numpy      = y_model3.cpu().float().numpy()
