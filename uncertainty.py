@@ -19,7 +19,10 @@ from lib.architectures import Model
 from lib.loss import NLLLoss
 from lib.file_io import *
 
-device = torch.device("cuda:0")
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")
+else:
+    device = torch.device("cpu")
 
 def get_target(x_train, add_noise= False, std_dev= 3):
     y_train = torch.pow(x_train, 3)
